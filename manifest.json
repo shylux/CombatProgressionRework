@@ -1,0 +1,9 @@
+{
+  "Name": "CombatProgressionRework",
+  "Author": "shylux",
+  "Version": "1.0.0",
+  "Description": "Reworks combat progression.",
+  "UniqueID": "shylux.CombatProgressionRework",
+  "EntryDll": "CombatProgressionRework.dll",
+  "MinimumApiVersion": "4.0.0"
+}
