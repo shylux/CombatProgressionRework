@@ -1,5 +1,7 @@
 # CombatProgressionRework
 
+This mod should only be used on new save files.
+
 ## Progression Overview
 
 1. Reach the bottom of the mines. There you receive the key to willy's backroom.

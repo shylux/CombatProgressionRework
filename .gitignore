@@ -21,3 +21,5 @@ Thumbs.db
 config.json
 .claude
 .idea
+
+*.md

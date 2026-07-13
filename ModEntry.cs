@@ -29,9 +29,20 @@ public class ModEntry : Mod
 
     private void OnWarped(object? sender, WarpedEventArgs e)
     {
-        if (!e.IsLocalPlayer || e.NewLocation is not MineShaft mine || mine.mineLevel != MineShaft.bottomOfMineLevel)
+        if (!e.IsLocalPlayer)
             return;
 
+        if (e.NewLocation is MineShaft mine && mine.mineLevel == MineShaft.bottomOfMineLevel)
+            HandleMineBottom(mine);
+        else if (e.NewLocation is Caldera caldera)
+            HandleCaldera(caldera);
+    }
+
+    /**
+     * Replaces the skull key at the bottom of the mines with willy's backroom key.
+     */
+    private static void HandleMineBottom(MineShaft mine)
+    {
         var pos = new Vector2(9f, 9f);
         if (!mine.overlayObjects.TryGetValue(pos, out var obj) || obj is not Chest chest)
             return;
@@ -46,5 +57,24 @@ public class ModEntry : Mod
             chest.Items.Add(new SpecialItem(WillyKey.Which));
         else if (chest.Items.Count == 0)
             mine.overlayObjects.Remove(pos);
+    }
+
+    /**
+     * Replaces prismatic shard in chest on top of the volcano with the skull key.
+     */
+    private static void HandleCaldera(Caldera caldera)
+    {
+        // Is the chest present?
+        var pos = new Vector2(25f, 28f);
+        if (!caldera.overlayObjects.TryGetValue(pos, out var obj) || obj is not Chest chest)
+            return;
+
+        var shard = chest.Items.FirstOrDefault(i => i?.QualifiedItemId == "(O)74");
+        // Is the chest looted?
+        if (shard == null)
+            return;
+
+        chest.Items.Remove(shard);
+        chest.Items.Add(new SpecialItem(SpecialItem.skullKey));
     }
 }
