@@ -27,6 +27,8 @@ public class ModEntry : Mod
         QiRoom.Config = Config;
         XpRequirement.Monitor = Monitor;
         XpRequirement.Config = Config;
+        Mastery.Monitor = Monitor;
+        Mastery.Config = Config;
 
         new Harmony(ModManifest.UniqueID).PatchAll();
         helper.Events.Player.Warped += OnWarped;
@@ -106,7 +108,7 @@ public class ModEntry : Mod
 
         gmcm.Register(
             mod: ModManifest,
-            reset: () => XpRequirement.Config = QiRoom.Config = BoatCost.Config = Config = new ModConfig(),
+            reset: () => Mastery.Config = XpRequirement.Config = QiRoom.Config = BoatCost.Config = Config = new ModConfig(),
             save: () =>
             {
                 Helper.WriteConfig(Config);
@@ -146,6 +148,11 @@ public class ModEntry : Mod
             tooltip: () => Helper.Translation.Get("config.xp-modifier.tooltip"),
             min: 0.1f, max: 2f, interval: 0.05f,
             formatValue: value => $"{value:0.00}x");
+        gmcm.AddBoolOption(ModManifest,
+            getValue: () => Config.FreeFirstMastery,
+            setValue: value => Config.FreeFirstMastery = value,
+            name: () => Helper.Translation.Get("config.free-mastery.name"),
+            tooltip: () => Helper.Translation.Get("config.free-mastery.tooltip"));
         gmcm.AddBoolOption(ModManifest,
             getValue: () => Config.UnlockQiRoom,
             setValue: value => Config.UnlockQiRoom = value,
