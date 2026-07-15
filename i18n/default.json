@@ -2,6 +2,12 @@
     "willy-key.name": "Willy's Back Room Key",
     "willy-key.hold-up-message": "You found the key to Willy's back room!",
 
+    "galaxy.not-worthy": "You have not proven yourself to wield galactic power.",
+    "galaxy.worthy": "You have proven yourself worthy of galactic power.",
+    "galaxy.quest.title": "Galactic",
+    "galaxy.quest.description": "Something ancient stirs beneath the desert pillars, but it deems you unworthy. Prove your skill by reaching level 50 of the Skull Cavern without placing any staircases.",
+    "galaxy.quest.objective": "Reach Skull Cavern level 50 without staircases",
+
     "config.section.boat.name": "Boat Repair",
     "config.section.boat.tooltip": "Materials Willy needs to repair the boat in the back room.",
     "config.boat-hardwood.name": "Hardwood Cost",

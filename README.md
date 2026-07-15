@@ -8,7 +8,7 @@ This mod should only be used on new save files.
 2. Build the boat with reduced material cost.
 3. Reach the top of the volcano. There you receive the skull key.
    1. Acquire dwarven or dragontooth weaponry.
-4. Reach level 100 of the skull cavern. This will unlock the galaxy sword.
+4. Reach level 50 of the skull cavern without stairs. This will unlock the galaxy sword.
 
 ## Other changes
 
@@ -23,3 +23,6 @@ Most of those can be configured or turned off.
 7. Monster musk is unlocked with level 7 combat.
 8. Big monster eradication goals are reduced.
 
+## TODO
+
+Test quest progress mine -> skull cavern

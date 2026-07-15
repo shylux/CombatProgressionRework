@@ -19,6 +19,8 @@ public class ModEntry : Mod
 
         WillyKey.Monitor = Monitor;
         WillyKey.Translations = helper.Translation;
+        GalaxySword.Monitor = Monitor;
+        GalaxySword.Translations = helper.Translation;
         BoatCost.Monitor = Monitor;
         BoatCost.Config = Config;
 
@@ -53,6 +55,20 @@ public class ModEntry : Mod
                 ReplaceCost(data, "BoatTunnel_DonateIridiumHint", 5, Config.BoatIridiumBarCost);
                 ReplaceCost(data, "BoatTunnel_DonateBatteries", 5, Config.BoatBatteryPackCost);
                 ReplaceCost(data, "BoatTunnel_DonateBatteriesHint", 5, Config.BoatBatteryPackCost);
+            });
+        }
+        else if (e.NameWithoutLocale.IsEquivalentTo("Data/Quests"))
+        {
+            e.Edit(asset =>
+            {
+                // Basic/<title>/<description>/<objective>/<conditions>/<next quests>/<money>/<reward desc>/<cancellable>
+                var data = asset.AsDictionary<string, string>().Data;
+                data[GalaxySword.QuestId] = string.Join("/",
+                    "Basic",
+                    Helper.Translation.Get("galaxy.quest.title"),
+                    Helper.Translation.Get("galaxy.quest.description"),
+                    Helper.Translation.Get("galaxy.quest.objective"),
+                    "", "-1", "0", "-1", "false");
             });
         }
         else if (e.NameWithoutLocale.IsEquivalentTo("Data/Events/BoatTunnel"))
@@ -123,8 +139,14 @@ public class ModEntry : Mod
         if (!e.IsLocalPlayer)
             return;
 
-        if (e.NewLocation is MineShaft mine && mine.mineLevel == MineShaft.bottomOfMineLevel)
-            HandleMineBottom(mine);
+        if (e.NewLocation is MineShaft mine)
+        {
+            if (mine.mineLevel == MineShaft.bottomOfMineLevel)
+                HandleMineBottom(mine);
+            else if (mine.mineLevel != MineShaft.quarryMineShaft
+                && mine.mineLevel >= MineShaft.bottomOfMineLevel + GalaxySword.RequiredSkullCavernLevel)
+                HandleSkullCavernDepth();
+        }
         else if (e.NewLocation is Caldera caldera)
             HandleCaldera(caldera);
     }
@@ -148,6 +170,27 @@ public class ModEntry : Mod
             chest.Items.Add(new SpecialItem(WillyKey.Which));
         else if (chest.Items.Count == 0)
             mine.overlayObjects.Remove(pos);
+    }
+
+    /**
+     * Unlocks the galaxy sword when the player reaches skull cavern level 50
+     * without having placed any staircases this run (same counter the
+     * Mr. Qi level 100 cutscene uses).
+     */
+    private void HandleSkullCavernDepth()
+    {
+        if (MineShaft.numberOfCraftedStairsUsedThisRun > 0
+            || Game1.player.mailReceived.Contains(GalaxySword.MailFlag))
+            return;
+
+        Game1.player.mailReceived.Add(GalaxySword.MailFlag);
+
+        // Complete the quest even if the player never picked it up at the pillars
+        if (!Game1.player.hasQuest(GalaxySword.QuestId))
+            Game1.player.addQuest(GalaxySword.QuestId);
+        Game1.player.completeQuest(GalaxySword.QuestId);
+
+        Game1.drawObjectDialogue(Helper.Translation.Get("galaxy.worthy"));
     }
 
     /**
