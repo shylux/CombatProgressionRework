@@ -6,4 +6,5 @@ public sealed class ModConfig
     public int BoatIridiumBarCost { get; set; } = 1;
     public int BoatBatteryPackCost { get; set; } = 2;
     public bool UnlockQiRoom { get; set; } = true;
+    public float XpRequirementModifier { get; set; } = 0.6f;
 }

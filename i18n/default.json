@@ -19,5 +19,7 @@
 
     "config.section.other.name": "Other Changes",
     "config.qi-room.name": "Unlock Qi's Walnut Room",
-    "config.qi-room.tooltip": "Mr. Qi's room on Ginger Island West is open immediately instead of requiring 100 golden walnuts."
+    "config.qi-room.tooltip": "Mr. Qi's room on Ginger Island West is open immediately instead of requiring 100 golden walnuts.",
+    "config.xp-modifier.name": "XP Requirement Modifier",
+    "config.xp-modifier.tooltip": "Multiplier on the XP needed beyond level 5 for skill levels 6-10, for all skills. 0.6 = 7710 XP from level 5 to 10 instead of 12850. At 1.0 the feature is disabled entirely to prevent conflicts with other mods."
 }

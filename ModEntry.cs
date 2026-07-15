@@ -25,6 +25,8 @@ public class ModEntry : Mod
         BoatCost.Config = Config;
         QiRoom.Monitor = Monitor;
         QiRoom.Config = Config;
+        XpRequirement.Monitor = Monitor;
+        XpRequirement.Config = Config;
 
         new Harmony(ModManifest.UniqueID).PatchAll();
         helper.Events.Player.Warped += OnWarped;
@@ -104,7 +106,7 @@ public class ModEntry : Mod
 
         gmcm.Register(
             mod: ModManifest,
-            reset: () => QiRoom.Config = BoatCost.Config = Config = new ModConfig(),
+            reset: () => XpRequirement.Config = QiRoom.Config = BoatCost.Config = Config = new ModConfig(),
             save: () =>
             {
                 Helper.WriteConfig(Config);
@@ -137,6 +139,13 @@ public class ModEntry : Mod
 
         gmcm.AddSectionTitle(ModManifest,
             text: () => Helper.Translation.Get("config.section.other.name"));
+        gmcm.AddNumberOption(ModManifest,
+            getValue: () => Config.XpRequirementModifier,
+            setValue: value => Config.XpRequirementModifier = value,
+            name: () => Helper.Translation.Get("config.xp-modifier.name"),
+            tooltip: () => Helper.Translation.Get("config.xp-modifier.tooltip"),
+            min: 0.1f, max: 2f, interval: 0.05f,
+            formatValue: value => $"{value:0.00}x");
         gmcm.AddBoolOption(ModManifest,
             getValue: () => Config.UnlockQiRoom,
             setValue: value => Config.UnlockQiRoom = value,
