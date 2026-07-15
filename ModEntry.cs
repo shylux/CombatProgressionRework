@@ -23,6 +23,8 @@ public class ModEntry : Mod
         GalaxySword.Translations = helper.Translation;
         BoatCost.Monitor = Monitor;
         BoatCost.Config = Config;
+        QiRoom.Monitor = Monitor;
+        QiRoom.Config = Config;
 
         new Harmony(ModManifest.UniqueID).PatchAll();
         helper.Events.Player.Warped += OnWarped;
@@ -102,7 +104,7 @@ public class ModEntry : Mod
 
         gmcm.Register(
             mod: ModManifest,
-            reset: () => BoatCost.Config = Config = new ModConfig(),
+            reset: () => QiRoom.Config = BoatCost.Config = Config = new ModConfig(),
             save: () =>
             {
                 Helper.WriteConfig(Config);
@@ -132,6 +134,14 @@ public class ModEntry : Mod
             name: () => Helper.Translation.Get("config.boat-batteries.name"),
             tooltip: () => Helper.Translation.Get("config.boat-batteries.tooltip"),
             min: 0, max: 5);
+
+        gmcm.AddSectionTitle(ModManifest,
+            text: () => Helper.Translation.Get("config.section.other.name"));
+        gmcm.AddBoolOption(ModManifest,
+            getValue: () => Config.UnlockQiRoom,
+            setValue: value => Config.UnlockQiRoom = value,
+            name: () => Helper.Translation.Get("config.qi-room.name"),
+            tooltip: () => Helper.Translation.Get("config.qi-room.tooltip"));
     }
 
     private void OnWarped(object? sender, WarpedEventArgs e)
