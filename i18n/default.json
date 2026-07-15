@@ -1,4 +1,13 @@
 {
     "willy-key.name": "Willy's Back Room Key",
-    "willy-key.hold-up-message": "You found the key to Willy's back room!"
+    "willy-key.hold-up-message": "You found the key to Willy's back room!",
+
+    "config.section.boat.name": "Boat Repair",
+    "config.section.boat.tooltip": "Materials Willy needs to repair the boat in the back room.",
+    "config.boat-hardwood.name": "Hardwood Cost",
+    "config.boat-hardwood.tooltip": "How much hardwood is needed to repair the boat hull. Vanilla: 200.",
+    "config.boat-iridium.name": "Iridium Bar Cost",
+    "config.boat-iridium.tooltip": "How many iridium bars are needed to repair the boat anchor. Vanilla: 5.",
+    "config.boat-batteries.name": "Battery Pack Cost",
+    "config.boat-batteries.tooltip": "How many battery packs are needed to fix the boat ticket machine. Vanilla: 5."
 }

@@ -11,20 +11,111 @@ namespace CombatProgressionRework;
 
 public class ModEntry : Mod
 {
+    private ModConfig Config = null!;
+
     public override void Entry(IModHelper helper)
     {
+        Config = helper.ReadConfig<ModConfig>();
+
         WillyKey.Monitor = Monitor;
         WillyKey.Translations = helper.Translation;
+        BoatCost.Monitor = Monitor;
+        BoatCost.Config = Config;
 
         new Harmony(ModManifest.UniqueID).PatchAll();
         helper.Events.Player.Warped += OnWarped;
         helper.Events.GameLoop.GameLaunched += OnGameLaunched;
+        helper.Events.Content.AssetRequested += OnAssetRequested;
         Monitor.Log("CombatProgressionRework loaded!", LogLevel.Info);
     }
 
     private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
     {
         WillyKey.KeyTexture = Helper.ModContent.Load<Texture2D>("assets/willy-key.png");
+        RegisterConfigMenu();
+    }
+
+    /**
+     * Updates the boat repair dialogue to show the configured material costs
+     * instead of the vanilla ones (works for all languages since the numbers
+     * are written as digits in every translation).
+     */
+    private void OnAssetRequested(object? sender, AssetRequestedEventArgs e)
+    {
+        if (e.NameWithoutLocale.IsEquivalentTo("Strings/Locations"))
+        {
+            e.Edit(asset =>
+            {
+                var data = asset.AsDictionary<string, string>().Data;
+                ReplaceCost(data, "BoatTunnel_DonateHardwood", 200, Config.BoatHardwoodCost);
+                ReplaceCost(data, "BoatTunnel_DonateHardwoodHint", 200, Config.BoatHardwoodCost);
+                ReplaceCost(data, "BoatTunnel_DonateIridium", 5, Config.BoatIridiumBarCost);
+                ReplaceCost(data, "BoatTunnel_DonateIridiumHint", 5, Config.BoatIridiumBarCost);
+                ReplaceCost(data, "BoatTunnel_DonateBatteries", 5, Config.BoatBatteryPackCost);
+                ReplaceCost(data, "BoatTunnel_DonateBatteriesHint", 5, Config.BoatBatteryPackCost);
+            });
+        }
+        else if (e.NameWithoutLocale.IsEquivalentTo("Data/Events/BoatTunnel"))
+        {
+            e.Edit(asset =>
+            {
+                // Willy's boat intro event (id 9348571), where he says he needs
+                // 200 hardwood to patch the hull (the only amount he mentions)
+                var data = asset.AsDictionary<string, string>().Data;
+                foreach (var key in data.Keys.Where(k => k.Split('/')[0] == "9348571").ToArray())
+                    ReplaceCost(data, key, 200, Config.BoatHardwoodCost);
+            });
+        }
+    }
+
+    private static void ReplaceCost(IDictionary<string, string> data, string key, int vanillaCost, int newCost)
+    {
+        if (newCost == vanillaCost || !data.TryGetValue(key, out var text))
+            return;
+        // (?<!\d)...(?!\d) instead of \b so the match also works in languages
+        // where digits are directly followed by word characters (e.g. Chinese)
+        data[key] = System.Text.RegularExpressions.Regex.Replace(
+            text, $@"(?<!\d){vanillaCost}(?!\d)", newCost.ToString());
+    }
+
+    private void RegisterConfigMenu()
+    {
+        var gmcm = Helper.ModRegistry.GetApi<IGenericModConfigMenuApi>("spacechase0.GenericModConfigMenu");
+        if (gmcm == null)
+            return;
+
+        gmcm.Register(
+            mod: ModManifest,
+            reset: () => BoatCost.Config = Config = new ModConfig(),
+            save: () =>
+            {
+                Helper.WriteConfig(Config);
+                Helper.GameContent.InvalidateCache(asset =>
+                    asset.NameWithoutLocale.IsEquivalentTo("Strings/Locations")
+                    || asset.NameWithoutLocale.IsEquivalentTo("Data/Events/BoatTunnel"));
+            });
+
+        gmcm.AddSectionTitle(ModManifest,
+            text: () => Helper.Translation.Get("config.section.boat.name"),
+            tooltip: () => Helper.Translation.Get("config.section.boat.tooltip"));
+        gmcm.AddNumberOption(ModManifest,
+            getValue: () => Config.BoatHardwoodCost,
+            setValue: value => Config.BoatHardwoodCost = value,
+            name: () => Helper.Translation.Get("config.boat-hardwood.name"),
+            tooltip: () => Helper.Translation.Get("config.boat-hardwood.tooltip"),
+            min: 0, max: 200);
+        gmcm.AddNumberOption(ModManifest,
+            getValue: () => Config.BoatIridiumBarCost,
+            setValue: value => Config.BoatIridiumBarCost = value,
+            name: () => Helper.Translation.Get("config.boat-iridium.name"),
+            tooltip: () => Helper.Translation.Get("config.boat-iridium.tooltip"),
+            min: 0, max: 5);
+        gmcm.AddNumberOption(ModManifest,
+            getValue: () => Config.BoatBatteryPackCost,
+            setValue: value => Config.BoatBatteryPackCost = value,
+            name: () => Helper.Translation.Get("config.boat-batteries.name"),
+            tooltip: () => Helper.Translation.Get("config.boat-batteries.tooltip"),
+            min: 0, max: 5);
     }
 
     private void OnWarped(object? sender, WarpedEventArgs e)
