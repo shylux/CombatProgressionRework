@@ -13,4 +13,5 @@ public sealed class ModConfig
     public bool HarveyRingGift { get; set; } = true;
     public int HarveyRingHearts { get; set; } = 6;
     public bool MonsterMuskUnlock { get; set; } = true;
+    public float MonsterEradicationModifier { get; set; } = 0.5f;
 }

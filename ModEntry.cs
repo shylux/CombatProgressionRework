@@ -105,12 +105,22 @@ public class ModEntry : Mod
                 data["Monster Musk"] = string.Join("/", fields);
             });
         }
+        else if (Config.MonsterEradicationModifier != 1f
+            && e.NameWithoutLocale.IsEquivalentTo("Data/MonsterSlayerQuests"))
+        {
+            e.Edit(asset =>
+            {
+                // Only the big goals and Pepper Rex are modified
+                foreach (var goal in asset.AsDictionary<string, StardewValley.GameData.MonsterSlayerQuestData>().Data.Values)
+                    if (goal.Count >= 100 || goal.Targets?.Contains("Pepper Rex") == true)
+                        goal.Count = Math.Max(1, (int)Math.Round(goal.Count * Config.MonsterEradicationModifier));
+            });
+        }
         else if (e.NameWithoutLocale.IsEquivalentTo("Data/Events/BoatTunnel"))
         {
             e.Edit(asset =>
             {
-                // Willy's boat intro event (id 9348571), where he says he needs
-                // 200 hardwood to patch the hull (the only amount he mentions)
+                // Willy's boat intro event where he says he needs 200 hardwood to patch the hull
                 var data = asset.AsDictionary<string, string>().Data;
                 foreach (var key in data.Keys.Where(k => k.Split('/')[0] == "9348571").ToArray())
                     ReplaceCost(data, key, 200, Config.BoatHardwoodCost);
@@ -143,7 +153,8 @@ public class ModEntry : Mod
                 Helper.GameContent.InvalidateCache(asset =>
                     asset.NameWithoutLocale.IsEquivalentTo("Strings/Locations")
                     || asset.NameWithoutLocale.IsEquivalentTo("Data/Events/BoatTunnel")
-                    || asset.NameWithoutLocale.IsEquivalentTo("Data/CraftingRecipes"));
+                    || asset.NameWithoutLocale.IsEquivalentTo("Data/CraftingRecipes")
+                    || asset.NameWithoutLocale.IsEquivalentTo("Data/MonsterSlayerQuests"));
             });
 
         gmcm.AddSectionTitle(ModManifest,
@@ -192,6 +203,13 @@ public class ModEntry : Mod
             setValue: value => Config.MonsterMuskUnlock = value,
             name: () => Helper.Translation.Get("config.monster-musk.name"),
             tooltip: () => Helper.Translation.Get("config.monster-musk.tooltip"));
+        gmcm.AddNumberOption(ModManifest,
+            getValue: () => Config.MonsterEradicationModifier,
+            setValue: value => Config.MonsterEradicationModifier = value,
+            name: () => Helper.Translation.Get("config.eradication-modifier.name"),
+            tooltip: () => Helper.Translation.Get("config.eradication-modifier.tooltip"),
+            min: 0.1f, max: 4f, interval: 0.05f,
+            formatValue: value => $"{value:0.00}x");
         gmcm.AddBoolOption(ModManifest,
             getValue: () => Config.VillagerWeaponGifts,
             setValue: value => Config.VillagerWeaponGifts = value,

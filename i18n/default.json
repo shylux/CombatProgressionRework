@@ -26,6 +26,8 @@
     "config.free-mastery.tooltip": "The first mastery can be claimed for free as soon as the mastery cave is unlocked.",
     "config.monster-musk.name": "Early Monster Musk",
     "config.monster-musk.tooltip": "Learn the Monster Musk crafting recipe at combat level 7, in addition to the vanilla unlock (the Wizard's 'Prismatic Jelly' special order).",
+    "config.eradication-modifier.name": "Big Monster Eradication Modifier",
+    "config.eradication-modifier.tooltip": "Multiplier on monster eradication goals that require 100 or more kills. The Pepper Rex goal is also affected.",
 
     "config.weapon-gifts.name": "Villager Weapon Gifts",
     "config.weapon-gifts.tooltip": "Villagers who own a themed weapon mail it to you once you reach enough friendship hearts.",
