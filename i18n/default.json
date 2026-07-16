@@ -26,6 +26,8 @@
     "config.free-mastery.tooltip": "The first mastery can be claimed for free as soon as the mastery cave is unlocked.",
     "config.monster-musk.name": "Early Monster Musk",
     "config.monster-musk.tooltip": "Learn the Monster Musk crafting recipe at combat level 7, in addition to the vanilla unlock (the Wizard's 'Prismatic Jelly' special order).",
+    "config.railroad-rock.name": "Destructible Railroad Rock",
+    "config.railroad-rock.tooltip": "The rock blocking the mountain path to the railroad can be destroyed early with a bomb or a copper (or better) pickaxe. Vanilla: removed by the earthquake on Summer 3.",
     "config.eradication-modifier.name": "Big Monster Eradication Modifier",
     "config.eradication-modifier.tooltip": "Multiplier on monster eradication goals that require 100 or more kills. The Pepper Rex goal is also affected.",
 

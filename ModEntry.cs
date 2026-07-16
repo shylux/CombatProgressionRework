@@ -32,9 +32,12 @@ public class ModEntry : Mod
         VillagerWeaponGift.Monitor = Monitor;
         VillagerWeaponGift.Config = Config;
         VillagerWeaponGift.Translations = helper.Translation;
+        RailroadRock.Monitor = Monitor;
+        RailroadRock.Config = Config;
 
         new Harmony(ModManifest.UniqueID).PatchAll();
         helper.Events.Player.Warped += OnWarped;
+        helper.Events.GameLoop.DayStarted += RailroadRock.OnDayStarted;
         helper.Events.GameLoop.DayEnding += VillagerWeaponGift.OnDayEnding;
         helper.Events.GameLoop.GameLaunched += OnGameLaunched;
         helper.Events.Content.AssetRequested += OnAssetRequested;
@@ -146,7 +149,7 @@ public class ModEntry : Mod
 
         gmcm.Register(
             mod: ModManifest,
-            reset: () => VillagerWeaponGift.Config = Mastery.Config = XpRequirement.Config = QiRoom.Config = BoatCost.Config = Config = new ModConfig(),
+            reset: () => RailroadRock.Config = VillagerWeaponGift.Config = Mastery.Config = XpRequirement.Config = QiRoom.Config = BoatCost.Config = Config = new ModConfig(),
             save: () =>
             {
                 Helper.WriteConfig(Config);
@@ -203,6 +206,11 @@ public class ModEntry : Mod
             setValue: value => Config.MonsterMuskUnlock = value,
             name: () => Helper.Translation.Get("config.monster-musk.name"),
             tooltip: () => Helper.Translation.Get("config.monster-musk.tooltip"));
+        gmcm.AddBoolOption(ModManifest,
+            getValue: () => Config.EarlyRailroadRock,
+            setValue: value => Config.EarlyRailroadRock = value,
+            name: () => Helper.Translation.Get("config.railroad-rock.name"),
+            tooltip: () => Helper.Translation.Get("config.railroad-rock.tooltip"));
         gmcm.AddNumberOption(ModManifest,
             getValue: () => Config.MonsterEradicationModifier,
             setValue: value => Config.MonsterEradicationModifier = value,

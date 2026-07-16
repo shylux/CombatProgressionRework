@@ -17,7 +17,7 @@ Most of those can be configured or turned off.
 1. XP requirements are reduced for level 5 - 10.
 2. Mr. Qi's room is unlocked immediately.
 3. The first mastery is free.
-4. The rock blocking the mountain can be destroyed early with a bomb or bronze pickaxe.
+4. The rock blocking the mountain path to the railroad can be destroyed early with a bomb or copper pickaxe.
 5. Villagers will gift you their personal weapon at 4 hearts.
 6. Harvey gifts you the hot java ring at 6 hearts.
 7. Monster musk is unlocked with level 7 combat.
