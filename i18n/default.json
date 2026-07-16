@@ -29,8 +29,13 @@
     "config.weapon-gifts.tooltip": "Villagers who own a themed weapon mail it to you once you reach enough friendship hearts.",
     "config.weapon-gifts-hearts.name": "Weapon Gift Hearts",
     "config.weapon-gifts-hearts.tooltip": "Friendship hearts needed before a villager mails you their weapon.",
+    "config.ring-gift.name": "Harvey's Ring Gift",
+    "config.ring-gift.tooltip": "Harvey mails you a Hot Java Ring once you reach enough friendship hearts.",
+    "config.ring-gift-hearts.name": "Ring Gift Hearts",
+    "config.ring-gift-hearts.tooltip": "Friendship hearts needed before Harvey mails you the Hot Java Ring.",
 
     "weapon-mail.title": "A Gift from {{name}}",
+    "ring-mail.Harvey": "Hello,^I know you keep long hours between the farm and those caves, so I ordered you something from a medical supply catalog... okay, it was a coffee catalog. It's called a Hot Java Ring - wear it and the monsters you defeat will sometimes drop coffee.^Caffeine is no substitute for sleep, but I suppose it's better than fainting in a mineshaft.^Doctor's orders: stay warm and hydrated.^   -Harvey",
     "weapon-mail.Abigail": "Hey!^I heard you've been going down into the mines. SO jealous. Anyway, I want you to have my planchette. I originally got it to talk to spirits, but it turns out it's also great for slicing slimes.^Don't tell my mom.^   -Abby",
     "weapon-mail.Alex": "Hey, it's Alex.^This is the bat I used back when I first got serious about gridball. It's got a few good swings left in it, so I figured you could use it out there in the mines.^Swing from the hips!^   -Alex",
     "weapon-mail.Elliott": "Dear friend,^They say the pen is mightier than the sword. I've found this to be literally true of my pencil, which once fended off a particularly aggressive seagull.^May it serve your adventures as it has served my prose.^   -Elliott",

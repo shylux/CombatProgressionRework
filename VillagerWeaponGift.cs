@@ -13,6 +13,9 @@ namespace CombatProgressionRework;
  * configured friendship level. In vanilla these weapons are only sold at
  * the Desert Festival for 70 calico eggs. The gifted weapon comes with a
  * random innate enchantment.
+ *
+ * Harvey additionally sends his Hot Java Ring at a higher friendship level
+ * (in vanilla it's only found in the volcano's rare chests).
  */
 [HarmonyPatch(typeof(LetterViewerMenu), MethodType.Constructor, typeof(string), typeof(string), typeof(bool))]
 internal static class VillagerWeaponGift
@@ -37,6 +40,8 @@ internal static class VillagerWeaponGift
     };
 
     private const string MailIdPrefix = "shylux.CombatProgressionRework_WeaponGift_";
+    private const string RingMailId = "shylux.CombatProgressionRework_RingGift_Harvey";
+    private const string HotJavaRingId = "(O)860";
 
     private static string MailId(string npcName) => MailIdPrefix + npcName;
 
@@ -48,24 +53,36 @@ internal static class VillagerWeaponGift
             data[MailId(npcName)] = Translations.Get($"weapon-mail.{npcName}")
                 + $" %item id {weaponId} %%"
                 + $"[#]{Translations.Get("weapon-mail.title", new { name = npcName })}";
+
+        data[RingMailId] = Translations.Get("ring-mail.Harvey")
+            + $" %item id {HotJavaRingId} %%"
+            + $"[#]{Translations.Get("weapon-mail.title", new { name = "Harvey" })}";
     }
 
     public static void OnDayEnding(object? sender, DayEndingEventArgs e)
     {
         try
         {
-            if (!Config.VillagerWeaponGifts)
-                return;
-
-            foreach (var npcName in Weapons.Keys)
+            if (Config.VillagerWeaponGifts)
             {
-                var mailId = MailId(npcName);
-                if (!Game1.player.hasOrWillReceiveMail(mailId)
-                    && Game1.player.getFriendshipHeartLevelForNPC(npcName) >= Config.VillagerWeaponHearts)
+                foreach (var npcName in Weapons.Keys)
                 {
-                    Game1.addMailForTomorrow(mailId);
-                    Monitor.Log($"Queued weapon gift mail from {npcName}.");
+                    var mailId = MailId(npcName);
+                    if (!Game1.player.hasOrWillReceiveMail(mailId)
+                        && Game1.player.getFriendshipHeartLevelForNPC(npcName) >= Config.VillagerWeaponHearts)
+                    {
+                        Game1.addMailForTomorrow(mailId);
+                        Monitor.Log($"Queued weapon gift mail from {npcName}.");
+                    }
                 }
+            }
+
+            if (Config.HarveyRingGift
+                && !Game1.player.hasOrWillReceiveMail(RingMailId)
+                && Game1.player.getFriendshipHeartLevelForNPC("Harvey") >= Config.HarveyRingHearts)
+            {
+                Game1.addMailForTomorrow(RingMailId);
+                Monitor.Log("Queued ring gift mail from Harvey.");
             }
         }
         catch (Exception ex)

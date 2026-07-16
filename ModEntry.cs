@@ -177,6 +177,17 @@ public class ModEntry : Mod
             name: () => Helper.Translation.Get("config.weapon-gifts-hearts.name"),
             tooltip: () => Helper.Translation.Get("config.weapon-gifts-hearts.tooltip"),
             min: 1, max: 10);
+        gmcm.AddBoolOption(ModManifest,
+            getValue: () => Config.HarveyRingGift,
+            setValue: value => Config.HarveyRingGift = value,
+            name: () => Helper.Translation.Get("config.ring-gift.name"),
+            tooltip: () => Helper.Translation.Get("config.ring-gift.tooltip"));
+        gmcm.AddNumberOption(ModManifest,
+            getValue: () => Config.HarveyRingHearts,
+            setValue: value => Config.HarveyRingHearts = value,
+            name: () => Helper.Translation.Get("config.ring-gift-hearts.name"),
+            tooltip: () => Helper.Translation.Get("config.ring-gift-hearts.tooltip"),
+            min: 1, max: 10);
     }
 
     private void OnWarped(object? sender, WarpedEventArgs e)

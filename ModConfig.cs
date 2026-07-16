@@ -10,4 +10,6 @@ public sealed class ModConfig
     public float XpRequirementModifier { get; set; } = 0.6f;
     public bool VillagerWeaponGifts { get; set; } = true;
     public int VillagerWeaponHearts { get; set; } = 4;
+    public bool HarveyRingGift { get; set; } = true;
+    public int HarveyRingHearts { get; set; } = 6;
 }
