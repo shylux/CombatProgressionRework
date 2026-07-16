@@ -29,9 +29,13 @@ public class ModEntry : Mod
         XpRequirement.Config = Config;
         Mastery.Monitor = Monitor;
         Mastery.Config = Config;
+        VillagerWeaponGift.Monitor = Monitor;
+        VillagerWeaponGift.Config = Config;
+        VillagerWeaponGift.Translations = helper.Translation;
 
         new Harmony(ModManifest.UniqueID).PatchAll();
         helper.Events.Player.Warped += OnWarped;
+        helper.Events.GameLoop.DayEnding += VillagerWeaponGift.OnDayEnding;
         helper.Events.GameLoop.GameLaunched += OnGameLaunched;
         helper.Events.Content.AssetRequested += OnAssetRequested;
         Monitor.Log("CombatProgressionRework loaded!", LogLevel.Info);
@@ -77,6 +81,10 @@ public class ModEntry : Mod
                     "", "-1", "0", "-1", "false");
             });
         }
+        else if (e.NameWithoutLocale.IsEquivalentTo("Data/mail"))
+        {
+            e.Edit(asset => VillagerWeaponGift.AddMailEntries(asset.AsDictionary<string, string>().Data));
+        }
         else if (e.NameWithoutLocale.IsEquivalentTo("Data/Events/BoatTunnel"))
         {
             e.Edit(asset =>
@@ -108,7 +116,7 @@ public class ModEntry : Mod
 
         gmcm.Register(
             mod: ModManifest,
-            reset: () => Mastery.Config = XpRequirement.Config = QiRoom.Config = BoatCost.Config = Config = new ModConfig(),
+            reset: () => VillagerWeaponGift.Config = Mastery.Config = XpRequirement.Config = QiRoom.Config = BoatCost.Config = Config = new ModConfig(),
             save: () =>
             {
                 Helper.WriteConfig(Config);
@@ -158,6 +166,17 @@ public class ModEntry : Mod
             setValue: value => Config.UnlockQiRoom = value,
             name: () => Helper.Translation.Get("config.qi-room.name"),
             tooltip: () => Helper.Translation.Get("config.qi-room.tooltip"));
+        gmcm.AddBoolOption(ModManifest,
+            getValue: () => Config.VillagerWeaponGifts,
+            setValue: value => Config.VillagerWeaponGifts = value,
+            name: () => Helper.Translation.Get("config.weapon-gifts.name"),
+            tooltip: () => Helper.Translation.Get("config.weapon-gifts.tooltip"));
+        gmcm.AddNumberOption(ModManifest,
+            getValue: () => Config.VillagerWeaponHearts,
+            setValue: value => Config.VillagerWeaponHearts = value,
+            name: () => Helper.Translation.Get("config.weapon-gifts-hearts.name"),
+            tooltip: () => Helper.Translation.Get("config.weapon-gifts-hearts.tooltip"),
+            min: 1, max: 10);
     }
 
     private void OnWarped(object? sender, WarpedEventArgs e)

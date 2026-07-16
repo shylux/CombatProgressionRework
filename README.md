@@ -18,7 +18,7 @@ Most of those can be configured or turned off.
 2. Mr. Qi's room is unlocked immediately.
 3. The first mastery is free.
 4. The rock blocking the mountain can be destroyed early with a bomb or bronze pickaxe.
-5. Villager will gift you their personal weapon at 4 hearts.
+5. Villagers will gift you their personal weapon at 4 hearts.
 6. Harvey gifts you the hot java ring at 6 hearts.
 7. Monster musk is unlocked with level 7 combat.
 8. Big monster eradication goals are reduced.

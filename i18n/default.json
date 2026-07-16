@@ -23,5 +23,22 @@
     "config.xp-modifier.name": "XP Requirement Modifier",
     "config.xp-modifier.tooltip": "Multiplier on the XP needed beyond level 5 for skill levels 6-10, for all skills. 0.6 = 7710 XP from level 5 to 10 instead of 12850. At 1.0 the feature is disabled entirely to prevent conflicts with other mods.",
     "config.free-mastery.name": "Free First Mastery",
-    "config.free-mastery.tooltip": "The first mastery can be claimed for free as soon as the mastery cave is unlocked."
+    "config.free-mastery.tooltip": "The first mastery can be claimed for free as soon as the mastery cave is unlocked.",
+
+    "config.weapon-gifts.name": "Villager Weapon Gifts",
+    "config.weapon-gifts.tooltip": "Villagers who own a themed weapon mail it to you once you reach enough friendship hearts.",
+    "config.weapon-gifts-hearts.name": "Weapon Gift Hearts",
+    "config.weapon-gifts-hearts.tooltip": "Friendship hearts needed before a villager mails you their weapon.",
+
+    "weapon-mail.title": "A Gift from {{name}}",
+    "weapon-mail.Abigail": "Hey!^I heard you've been going down into the mines. SO jealous. Anyway, I want you to have my planchette. I originally got it to talk to spirits, but it turns out it's also great for slicing slimes.^Don't tell my mom.^   -Abby",
+    "weapon-mail.Alex": "Hey, it's Alex.^This is the bat I used back when I first got serious about gridball. It's got a few good swings left in it, so I figured you could use it out there in the mines.^Swing from the hips!^   -Alex",
+    "weapon-mail.Elliott": "Dear friend,^They say the pen is mightier than the sword. I've found this to be literally true of my pencil, which once fended off a particularly aggressive seagull.^May it serve your adventures as it has served my prose.^   -Elliott",
+    "weapon-mail.Haley": "Hi!^Okay, so this is going to sound weird, but... this clothes iron? A bat flew into my room once and I flattened it with one swing. It works WAY better than you'd think.^Just don't bring it back covered in monster gunk. Actually, just keep it.^   -Haley",
+    "weapon-mail.Harvey": "Hello,^As your doctor, I can't officially endorse crawling around monster-infested caves. But since I know you'll go anyway, please take my reflex mallet. It's meant for checking knees, but it swings surprisingly hard.^Stay safe down there.^   -Harvey",
+    "weapon-mail.Leah": "Hi!^This is the whittling blade I've used on a hundred sculptures. It's carved a lot of beauty out of dead wood... maybe it can carve you a path through the mines, too.^Take good care of it.^   -Leah",
+    "weapon-mail.Maru": "Hi!^I machined this wrench myself. It's rated for tightening hex bolts and, as I recently discovered, for bonking rock crabs.^Field test it for me and tell me everything!^   -Maru",
+    "weapon-mail.Penny": "Hi,^It's not much, but this frying pan has gotten me through some tough nights, and it's sturdier than it looks. I'd feel better knowing you have something to defend yourself with down in those caves.^Please be careful.^   -Penny",
+    "weapon-mail.Sam": "Yo!^This old guitar already survived being thrown off a roof (long story), so I figure it can survive the mines too. It's out of tune anyway.^Rock on!^   -Sam",
+    "weapon-mail.Sebastian": "Hey.^In my Solarion Chronicles campaign there's a legendary mace that was lost for a thousand years. I made a real one. Don't ask how long it took.^It's yours now. Try not to lose it... that would be too ironic.^   -Sebastian"
 }

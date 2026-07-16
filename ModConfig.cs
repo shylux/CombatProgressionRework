@@ -8,4 +8,6 @@ public sealed class ModConfig
     public bool UnlockQiRoom { get; set; } = true;
     public bool FreeFirstMastery { get; set; } = true;
     public float XpRequirementModifier { get; set; } = 0.6f;
+    public bool VillagerWeaponGifts { get; set; } = true;
+    public int VillagerWeaponHearts { get; set; } = 4;
 }
