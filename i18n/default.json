@@ -24,6 +24,8 @@
     "config.xp-modifier.tooltip": "Multiplier on the XP needed beyond level 5 for skill levels 6-10, for all skills. 0.6 = 7710 XP from level 5 to 10 instead of 12850. At 1.0 the feature is disabled entirely to prevent conflicts with other mods.",
     "config.free-mastery.name": "Free First Mastery",
     "config.free-mastery.tooltip": "The first mastery can be claimed for free as soon as the mastery cave is unlocked.",
+    "config.monster-musk.name": "Early Monster Musk",
+    "config.monster-musk.tooltip": "Learn the Monster Musk crafting recipe at combat level 7, in addition to the vanilla unlock (the Wizard's 'Prismatic Jelly' special order).",
 
     "config.weapon-gifts.name": "Villager Weapon Gifts",
     "config.weapon-gifts.tooltip": "Villagers who own a themed weapon mail it to you once you reach enough friendship hearts.",

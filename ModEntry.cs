@@ -85,6 +85,26 @@ public class ModEntry : Mod
         {
             e.Edit(asset => VillagerWeaponGift.AddMailEntries(asset.AsDictionary<string, string>().Data));
         }
+        else if (Config.MonsterMuskUnlock && e.NameWithoutLocale.IsEquivalentTo("Data/CraftingRecipes"))
+        {
+            e.Edit(asset =>
+            {
+                // <ingredients>/<unused>/<yield>/<big craftable>/<unlock conditions>[/<display name>]
+                var data = asset.AsDictionary<string, string>().Data;
+                if (!data.TryGetValue("Monster Musk", out var recipe))
+                    return;
+                var fields = recipe.Split('/');
+                if (fields.Length <= 4)
+                {
+                    Monitor.Log($"Unexpected Monster Musk recipe format: {recipe}", LogLevel.Warn);
+                    return;
+                }
+                // Learned on the combat level 7 level-up screen, in addition
+                // to the vanilla unlock (Wizard's Prismatic Jelly special order)
+                fields[4] = "Combat 7";
+                data["Monster Musk"] = string.Join("/", fields);
+            });
+        }
         else if (e.NameWithoutLocale.IsEquivalentTo("Data/Events/BoatTunnel"))
         {
             e.Edit(asset =>
@@ -122,7 +142,8 @@ public class ModEntry : Mod
                 Helper.WriteConfig(Config);
                 Helper.GameContent.InvalidateCache(asset =>
                     asset.NameWithoutLocale.IsEquivalentTo("Strings/Locations")
-                    || asset.NameWithoutLocale.IsEquivalentTo("Data/Events/BoatTunnel"));
+                    || asset.NameWithoutLocale.IsEquivalentTo("Data/Events/BoatTunnel")
+                    || asset.NameWithoutLocale.IsEquivalentTo("Data/CraftingRecipes"));
             });
 
         gmcm.AddSectionTitle(ModManifest,
@@ -166,6 +187,11 @@ public class ModEntry : Mod
             setValue: value => Config.UnlockQiRoom = value,
             name: () => Helper.Translation.Get("config.qi-room.name"),
             tooltip: () => Helper.Translation.Get("config.qi-room.tooltip"));
+        gmcm.AddBoolOption(ModManifest,
+            getValue: () => Config.MonsterMuskUnlock,
+            setValue: value => Config.MonsterMuskUnlock = value,
+            name: () => Helper.Translation.Get("config.monster-musk.name"),
+            tooltip: () => Helper.Translation.Get("config.monster-musk.tooltip"));
         gmcm.AddBoolOption(ModManifest,
             getValue: () => Config.VillagerWeaponGifts,
             setValue: value => Config.VillagerWeaponGifts = value,

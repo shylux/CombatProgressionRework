@@ -12,4 +12,5 @@ public sealed class ModConfig
     public int VillagerWeaponHearts { get; set; } = 4;
     public bool HarveyRingGift { get; set; } = true;
     public int HarveyRingHearts { get; set; } = 6;
+    public bool MonsterMuskUnlock { get; set; } = true;
 }
